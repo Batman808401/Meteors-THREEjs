@@ -1,0 +1,28 @@
+body {
+	margin: 0px;
+	background-color: rgb(0,179,179);
+	overflow: hidden;
+}
+#score {
+	font-size: 50px;
+	margin-top: 12px;
+	font-style: bold;
+	text-align: center;
+	color: orange;
+}
+#container {
+	width: 400px;
+	height: 400px;
+	border: 3px solid orange;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 12px;
+	cursor: none;
+}
+#bestScore {
+	font-size: 30px;
+	margin-top: 12px;
+	font-style: bold;
+	text-align: center;
+	color: white;
+}
