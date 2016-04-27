@@ -24,7 +24,7 @@ function init() {
 	scene = new THREE.Scene();
 	// mesh properties
 	var geometry = new THREE.SphereGeometry( sphereRadius );
-	var texture = THREE.ImageUtils.loadTexture( 'imgs/crate.gif' );
+	var texture = THREE.ImageUtils.loadTexture( 'Resources/imgs/crate.gif' );
 	texture.anisotropy = renderer.getMaxAnisotropy();
 	var material = new THREE.MeshBasicMaterial( { map: texture } );
 	// enemies
