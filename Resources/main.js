@@ -20,29 +20,31 @@ function init() {
   container.appendChild(renderer.domElement);
   // camera
   camera = new THREE.PerspectiveCamera(70, container.clientWidth / container.clientHeight, 1, 1000);
-  camera.position.z = 400;
+
+  camera.position.y = -45;
+  camera.position.z = -400;
+  camera.rotation.x = 135;
   // scene
   scene = new THREE.Scene();
   // mesh properties
   var geometry = new THREE.SphereGeometry(sphereRadius);
-  var texture = THREE.ImageUtils.loadTexture('Resources/imgs/crate.gif');
+  var texture = THREE.ImageUtils.loadTexture('Resouces/imgs/crate.gif');
   texture.anisotropy = renderer.getMaxAnisotropy();
   var material = new THREE.MeshBasicMaterial({
     map: texture
   });
   // enemies
-  var nBoxes = 30;
+  var nBoxes = 60;
   for (var i = 0; i < nBoxes; i++) {
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(enemyRangeX / 2 - enemyRangeX * Math.random(),
-      enemyRangeY / 2 - enemyRangeY * Math.random(),
-      0.0);
+      enemyRangeY / 2 - enemyRangeY * Math.random(), enemyRangeY / 2 - enemyRangeY * Math.random());
     scene.add(mesh);
     enemies.push(mesh);
   }
   // gem
   gem = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({
-    color: 0xFFFF00
+    color: 0xFF0000
   }));
   gem.position.set(gemRange / 2 - gemRange * Math.random(),
     gemRange / 2 - gemRange * Math.random(),
@@ -57,21 +59,21 @@ function init() {
 function onMouseMove(event) {
   mouse.x = ((event.clientX - container.offsetLeft) / container.clientWidth) * 2 - 1;
   mouse.y = -((event.clientY - container.offsetTop) / container.clientHeight) * 2 + 1;
-  player.position.set(275 * mouse.x, 275 * mouse.y, 0.0);
+  player.position.set(275 * mouse.x, 275 * -mouse.y, -5);
 }
 
 function animate() {
   requestAnimationFrame(animate);
   // update enemies
   for (var i = 0; i < enemies.length; i++) {
-    if (enemies[i].position.y < -enemyRangeY / 2) { // if the enemy has moved below the container
+    if (enemies[i].position.z < -enemyRangeY / 2) { // if the enemy has moved below the container
       enemies[i].position.x = enemyRangeX / 2 - enemyRangeX * Math.random(); //set new x-coord for variety
-      enemies[i].position.y = enemyRangeY / 2; // set y-coord at top of container
+      enemies[i].position.z = enemyRangeY / 2; // set y-coord at top of container
     } else {
       if (enemies[i].position.distanceTo(player.position) < 2 * sphereRadius) { // if there's a player-enemy collision
         scoreDiv.innerHTML = "0"; //reset score
       }
-      enemies[i].position.y -= enemySpeed; // translate enemy downwards
+      enemies[i].position.z -= enemySpeed; // translate enemy downwards
     }
   }
   // check for player-gem collision
