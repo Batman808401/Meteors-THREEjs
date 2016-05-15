@@ -46,7 +46,7 @@ function init() {
   
   //Arwing
   var loader = new THREE.JSONLoader();
-  loader.load('images/Arwing.json', addModel);
+  loader.load('imgs/Arwing.json', addModel);
   
   function addModel( geometry,  materials ) {
     var material = new THREE.MeshPhongMaterial( materials );
@@ -59,7 +59,7 @@ function init() {
   
   // mesh properties
   geometry = new THREE.SphereGeometry(sphereRadius);
-  texture = THREE.ImageUtils.loadTexture('images/crate.gif');
+  texture = THREE.ImageUtils.loadTexture('imgs/crate.gif');
   texture.anisotropy = renderer.getMaxAnisotropy();
   material = new THREE.MeshPhongMaterial({
     map: texture
@@ -100,7 +100,7 @@ function init() {
   minus = true;
   upgradeReady = false;
   addPoint = false;
-  
+	
   container.addEventListener('mousemove', onMouseMove, false);
 }
 
@@ -110,12 +110,7 @@ function onMouseMove(event) {
   Arwing.position.set(275 * mouse.x, 275 * -mouse.y, -5);
 }
 
-function upCollected() {
-  scene.remove(upgrade)
-  enemySpeed -= 2;
-  var score = Number(scoreDiv.innerHTML) + 10;
-  scoreDiv.innerHTML = score.toString();
-}
+
 
 function animate() {
   requestAnimationFrame(animate);
@@ -130,9 +125,20 @@ function animate() {
       if (enemies[i].position.distanceTo(Arwing.position) < 2 * sphereRadius) { // if there's a player-enemy collision
         scoreDiv.innerHTML = "0"; //reset score
         enemySpeed = 3;
+      	enemies[i].position.x = enemyRangeX / 2 - enemyRangeX * Math.random(); //set new x-coord for variety
+      	enemies[i].position.y = enemyRangeY / 2 - enemyRangeY * Math.random(); //set new x-coord for variety
+     	 	enemies[i].position.z = enemyRangeY / 2; // set z-coord at back of container
       }
       enemies[i].position.z -= enemySpeed; // translate enemy towards container
     }
+  }  
+	
+	//Wwhen player collides with upgrade
+	function upCollected() {
+  	scene.remove(upgrade)
+  	enemySpeed -= enemySpeed / 2;
+  	var score = Number(scoreDiv.innerHTML) + 10;
+  	scoreDiv.innerHTML = score.toString();
   }
   
   // check for player-gem collision
