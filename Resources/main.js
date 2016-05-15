@@ -84,9 +84,22 @@ function init() {
     0.0);
   scene.add(gem);
   
+  // upgrade
+  upgrade = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({
+    color: 0x0000FF
+  }));
+  upgrade.position.set(gemRange / 2 - gemRange * Math.random(),
+    gemRange / 2 - gemRange * Math.random(),
+    100);
+  
   // player
   /*player = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial());
   scene.add(player);*/
+  
+  //conditions
+  minus = true;
+  upgradeReady = false;
+  addPoint = false;
   
   container.addEventListener('mousemove', onMouseMove, false);
 }
@@ -97,7 +110,12 @@ function onMouseMove(event) {
   Arwing.position.set(275 * mouse.x, 275 * -mouse.y, -5);
 }
 
-var minus = true;
+function upCollected() {
+  scene.remove(upgrade)
+  enemySpeed -= 2;
+  var score = Number(scoreDiv.innerHTML) + 10;
+  scoreDiv.innerHTML = score.toString();
+}
 
 function animate() {
   requestAnimationFrame(animate);
@@ -106,6 +124,7 @@ function animate() {
   for (var i = 0; i < enemies.length; i++) {
     if (enemies[i].position.z < -enemyRangeY / 2) { // if the enemy has moved in front of the container
       enemies[i].position.x = enemyRangeX / 2 - enemyRangeX * Math.random(); //set new x-coord for variety
+      enemies[i].position.y = enemyRangeY / 2 - enemyRangeY * Math.random(); //set new x-coord for variety
       enemies[i].position.z = enemyRangeY / 2; // set z-coord at back of container
     } else {
       if (enemies[i].position.distanceTo(Arwing.position) < 2 * sphereRadius) { // if there's a player-enemy collision
@@ -129,13 +148,31 @@ function animate() {
     }
   }
   
-  /*if ( scoreDiv.innerHTML == 10 && minus) {
-    enemySpeed -= 5;
+  //when the score is equal to 10
+  if ( scoreDiv.innerHTML == 10 && minus) {
+    scene.add(upgrade); //add the upgrade
+    upgradeReady = true; //upgrade is ready to animate
+    addPoint = true;
+    //enemySpeed -= 3;
     minus = false;
   }
   if (minus === false && scoreDiv.innerHTML != 10) {
     minus = true;
-  }*/
+  }
+  
+  if (upgradeReady) {
+    upgrade.position.z -= enemySpeed;
+  }
+  if (upgrade.position.z < -enemyRangeY / 2) {
+    upgrade.position.x = enemyRangeX / 2 - enemyRangeX * Math.random();
+    upgrade.position.y = enemyRangeY / 2 - enemyRangeY * Math.random();
+    upgrade.position.z = enemyRangeY / 2
+  } else {
+    if (upgrade.position.distanceTo(Arwing.position) < 2 * sphereRadius && addPoint===true) {
+      addPoint = false;
+      upCollected();
+    }
+  }
   
   renderer.render(scene, camera);
 }
