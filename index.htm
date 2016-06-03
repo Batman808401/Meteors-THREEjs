@@ -1,18 +1,65 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Meteors</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="Resources/main.css">
-    <script src="Libs/three.min.js"></script>
-  </head>
-  <body>
-  
-		<div id="score">0</div>
+<html lang="en">
+	<head>
+		<title>Meteors</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="Resources/main.css">
+		<script src="Libs/three.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="ui">
+			<div id="liveScore">
+				<div id="score">0</div>
+				<div id="bestScore">best: 0</div>
+				<div id="user">
+					user name
+				</div>
+			</div>
+			<div id="test">
+				<div id="mainMenu">
+					<div id="Title">
+						meteors
+					</div>
+					<div id="userName">
+						Username (optional)
+						<input type="text" id="txtField">
+					</div>
+					<div class="menuButton" onclick="playGame()">
+						PLAY
+					</div>
+					<div class="menuButton" onclick="showScores()">
+						SCORES
+					</div>
+					<div class="menuButton" onclick="controlsMenu()">
+						CONTROLS
+					</div>
+					<div class="menuButton" onclick="optionsMenu()" style="margin-bottom: 10px">
+						OPTIONS
+					</div>
+					<span style="color: white;">For better experience, press F11 then F5</span>
+				</div>
+				<div id="scoreMenu">
+					<div id="scoreBoard">
+						<div id="scoreHead">
+							<div id="place">
+								#
+							</div>
+							<div id="userScoreName">
+								Name
+							</div>
+							<div id="userScore">
+								Score
+							</div>
+						</div>
+					</div>
+					<div class="menuButton" onclick="backFromScore()">
+						Back
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="container"></div>
-		<div id="bestScore">best: 0</div>
-		
-		<script src="Resources/main.js"></script>
-		
-  </body>
+		<script src = "Resources/main.js"></script>
+	</body>
 </html>
