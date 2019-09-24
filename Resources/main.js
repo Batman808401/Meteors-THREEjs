@@ -119,18 +119,18 @@ function init() {
   scene.add( spotLight );
   
   //Arwing
-  loader.load('imgs/Arwing.json', addModel);
+  loader.load('Resources/imgs/Arwing.json', addModel);
   function addModel( geometry,  materials ) {
     var material = new THREE.MeshPhongMaterial( materials );
     Arwing = new THREE.Mesh( geometry, material );
-    Arwing.scale.set(32,32,32)
+    Arwing.scale.set(32,32,32);
     Arwing.rotation.x = 135;
     //scene.add( Arwing );            
   }
 	
 	//skyBox
 	skyShape = new THREE.SphereGeometry(800,64,64);
-	skyTexture = THREE.ImageUtils.loadTexture("imgs/skyTexture.jpg");
+	skyTexture = THREE.ImageUtils.loadTexture("Resources/imgs/skyTexture.png");
 	skyTexture.anisotropy = renderer.getMaxAnisotropy();
 	skyMaterial = new THREE.MeshBasicMaterial({map:skyTexture});
 	skyMaterial.side = THREE.DoubleSide;
@@ -141,7 +141,7 @@ function init() {
   
   // mesh properties
   geometry = new THREE.SphereGeometry(sphereRadius,16, 12);
-  texture = THREE.ImageUtils.loadTexture('imgs/crate.gif');
+  texture = THREE.ImageUtils.loadTexture('Resources/imgs/crate.gif');
   texture.anisotropy = renderer.getMaxAnisotropy();
   material = new THREE.MeshPhongMaterial({
     map: texture
