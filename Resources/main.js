@@ -103,19 +103,24 @@ function init() {
 	
   //Light
   var spotLight = new THREE.SpotLight( 0xffffff );
+  var spotlight2 = new THREE.SpotLight();
+
   spotLight.position.set( 24, -45, -400 );
 
   spotLight.castShadow = true;
 
   spotLight.shadow.mapSize.width = 1024;
   spotLight.shadow.mapSize.height = 1024;
-
   spotLight.shadow.camera.near = 500;
   spotLight.shadow.camera.far = 4000;
   spotLight.shadow.camera.fov = 30;
   
   spotLight.power = 4;
+  spotlight2.copy(spotLight,spotlight2);
+  spotlight2.position.set(24, -45, 400);
+  spotlight2.rotation.x = 180;
 
+  scene.add(spotlight2); 
   scene.add( spotLight );
   
   //Arwing
